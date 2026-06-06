@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test.only('Open site, login with valid credentials and verify redirect to inventory page', async ({ page }) => {
+test('Open site, login with valid credentials and verify redirect to inventory page', async ({ page }) => {
   await page.goto('/');
   await page.getByPlaceholder('Username').fill('standard_user');
   await page.getByPlaceholder('Password').fill('secret_sauce');
