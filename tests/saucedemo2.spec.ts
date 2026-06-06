@@ -43,3 +43,22 @@ await page.getByRole("button", { name: "Login" }).click();
 await expect(errorMessage).toBeVisible(); 
 await expect(errorMessage).toContainText( "Epic sadface: Username is required" );
 });
+
+test('locked out user sees correct error message', async ({ page }) => {
+  await page.goto('/');
+
+  await page.getByPlaceholder('Username').fill('locked_out_user');
+  await page.getByPlaceholder('Password').fill('secret_sauce');
+
+  await page.getByRole('button', { name: 'Login' }).click();
+
+  await expect(
+    page.getByText('Epic sadface: Sorry, this user has been locked out.')
+  ).toBeVisible();
+
+  await expect(
+    page.getByText('Epic sadface: Sorry, this user has been locked out.')
+  ).toHaveText(
+    'Epic sadface: Sorry, this user has been locked out.'
+  );
+});
