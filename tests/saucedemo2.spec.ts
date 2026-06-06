@@ -1,13 +1,13 @@
 import { test, expect } from "@playwright/test";
 
-test('Open site, login with valid credentials and verify redirect to inventory page', async ({ page }) => {
+test.only('Open site, login with valid credentials and verify redirect to inventory page', async ({ page }) => {
   await page.goto('/');
   await page.getByPlaceholder('Username').fill('standard_user');
   await page.getByPlaceholder('Password').fill('secret_sauce');
   await page.getByRole('button', { name: 'Login' }).click();
   await page.waitForURL('**/inventory.html');
   await expect(page, "User should be redirected to inventory page").toHaveURL(/inventory\.html/);
-});
+}); 
  
 test('Login222  with wrong password. Verify that an error message is displayed', async ({ page }) => {
   await page.goto('/');
