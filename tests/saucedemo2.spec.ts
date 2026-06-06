@@ -9,7 +9,7 @@ test('Open site, login with valid credentials and verify redirect to inventory p
   await expect(page, "User should be redirected to inventory page").toHaveURL(/inventory\.html/);
 });
  
-test('111 Login with wrong password. Verify that an error message is displayed', async ({ page }) => {
+test('111 Login22  with wrong password. Verify that an error message is displayed', async ({ page }) => {
   await page.goto('/');
   await page.getByPlaceholder('Username').fill('standard_user');
   await page.getByPlaceholder('Password').fill('secretsauce');
