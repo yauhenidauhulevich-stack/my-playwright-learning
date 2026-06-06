@@ -1,0 +1,36 @@
+Test 1 
+Root cause:   The test was using an incorrect placeholder locator. 
+It searched for "User Name", but the login input on the page has the placeholder "Username". 
+As a result, Playwright could not find the element and timed out while waiting for it.
+
+Fix:          Changed the locator from:
+              page.getByPlaceholder("User Name")
+              to:
+              page.getByPlaceholder("Username")
+
+How I verified: Ran `npx playwright test --headed` and confirmed the test passes.
+
+Test 2 
+Root cause:   The test used an incorrect assertion locator and expected text. 
+It searched for an element via getByTestId("error"), but the page does not expose the error message through a matching 
+test id. The actual error message displayed after a failed login is
+ "Epic sadface: Username and password do not match any user in this service".
+
+Fix:          Replaced the assertion with:
+              await expect(
+                page.getByText(
+                  "Epic sadface: Username and password do not match any user in this service"
+                )
+              ).toBeVisible();
+
+How I verified: Ran `npx playwright test --headed` and confirmed the test passes.
+
+Test 3
+Root cause:   The click action was not awaited. 
+Although the test currently passes because the assertion retries until the cart badge updates, 
+the test relies on asynchronous timing and may become flaky.
+
+Fix:          Added the missing await before the click action:
+              await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
+
+How I verified: Ran `npx playwright test --headed` and confirmed the test passes.
