@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+/// <reference types="node" />
 
 /**
  * Read environment variables from file.
