@@ -28,3 +28,42 @@ test('locked_out_user cannot log in', async ({ page }) => {
   // Verify locked out error is shown
   await loginPage.expectError('lockedOut');
 });
+
+test('wrong password shows error message', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+
+  // Open login page
+  await loginPage.open();
+
+  // Try to login with invalid password
+  await loginPage.login('standard_user', 'wrong_password');
+
+  // Verify error message is shown
+  await loginPage.expectError('invalidCredentials');
+});
+
+test('empty username shows validation error', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+
+  // Open login page
+  await loginPage.open();
+
+  // Try to login without username
+  await loginPage.login('', 'secret_sauce');
+
+  // Verify validation error for missing username
+  await loginPage.expectError('missingUsername');
+});
+
+test('user cannot submit empty login form', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+
+  // Open login page
+  await loginPage.open();
+
+  // Click login button without entering credentials
+  await loginPage.loginButton.click();
+
+  // Verify validation error for missing username
+  await loginPage.expectError('missingUsername');
+});
