@@ -1,0 +1,25 @@
+test('Complete purchase flow', async ({ page }) => {
+  const inventory = new InventoryPage(page);
+  const cart = new CartPage(page);
+  const checkout = new CheckoutPage(page);
+  const overview = new CheckoutOverviewPage(page);
+  const complete = new CheckoutCompletePage(page);
+
+  await inventory.addProductToCart('Sauce Labs Backpack');
+
+  await inventory.openCart();
+
+  await cart.clickCheckout();
+
+  await checkout.continueCheckout(
+    'John',
+    'Doe',
+    '12345'
+  );
+
+  await overview.completeOrder();
+
+  await complete.verifyOrderCompleted();
+
+  await complete.returnToInventory();
+});
