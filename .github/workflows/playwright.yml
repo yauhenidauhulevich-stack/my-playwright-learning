@@ -22,7 +22,10 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run tests (Playwright auto-downloads browsers if needed)
+    - name: Install Playwright browsers
+      run: npx playwright install chromium
+
+    - name: Run tests
       run: npx playwright test
 
     - name: Upload report
