@@ -12,24 +12,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
+    - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup Node
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: lts/*
+        cache: npm
 
-    - name: Install dependencies
+    - name: Install dependencies (includes Playwright browsers via postinstall)
       run: npm ci
 
-    - name: Install Playwright browsers
-      run: npx playwright install --with-deps chromium
+    - name: Run Playwright tests
+      run: npm test
 
-    - name: Run tests
-      run: npx playwright test
-
-    - name: Upload report
+    - name: Upload Playwright report
       uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
