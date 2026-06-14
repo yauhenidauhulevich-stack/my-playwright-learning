@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test",
-    "postinstall": "npx playwright install chromium"
+    "test": "playwright test"
   },
   "keywords": [],
   "author": "",
