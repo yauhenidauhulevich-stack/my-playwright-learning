@@ -22,8 +22,12 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Install Playwright browsers
-      run: npx playwright install chromium
-
-    - name: Run tests
+    - name: Run tests (Playwright auto-downloads browsers if needed)
       run: npx playwright test
+
+    - name: Upload report
+      uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: playwright-report/
